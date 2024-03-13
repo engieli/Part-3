@@ -63,6 +63,7 @@ public class Villager : MonoBehaviour
         rb.MovePosition(rb.position + movement.normalized * speed * Time.deltaTime);
     }
 
+
     void Update()
     {
         //left click: move to the click location
@@ -70,6 +71,7 @@ public class Villager : MonoBehaviour
         {
             destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
+
 
         animator.SetFloat("Movement", movement.magnitude);
 
@@ -83,5 +85,10 @@ public class Villager : MonoBehaviour
     protected virtual void Attack()
     {
         animator.SetTrigger("Attack");
+    }
+
+    public virtual ChestType CanOpen ()
+    {
+        return ChestType.Villager;
     }
 }
