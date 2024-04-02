@@ -4,59 +4,50 @@ using UnityEngine;
 
 public class Thief : Villager
 {
-
     public GameObject knifePrefab;
+    public Transform spawnPoint1;
     public Transform spawnPoint2;
-    public Transform spawnPoint3;
-    public float moveSpeed = 5f;
-    public float boostedMoveSpeed = 10f;
-    private bool isBoosted = false;
 
+  
+    public float dashSpeed = 7;
+    Coroutine dashing;
 
+    protected override void Attack()
+    {
+        //dash towards mouse
+        destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+       if(dashing != null )
+        {
+            StopCoroutine(dashing);
+        }
 
+       dashing = StartCoroutine(Dash() );
+       
+    }
+
+    IEnumerator Dash()
+    {
+        speed += dashSpeed;
+        while(speed > 3)
+        {
+            yield return null;
+        }
+        base.Attack();
+        { 
+        yield return new WaitForSeconds(0.1f);
+            Instantiate(knifePrefab, spawnPoint2.position, spawnPoint2.rotation);
+            yield return new WaitForSeconds(0.1f)
+        }
+    }
+    protected override void Update()
+    {
+        if(Dashing == true)
+        {
+            Dash();
+        }
+    }
     public override ChestType CanOpen()
     {
         return ChestType.Thief;
     }
-    protected override void Attack()
-    {
-        destination = transform.position;
-        base.Attack();
-        Instantiate(knifePrefab, spawnPoint2.position, spawnPoint2.rotation);
-        
-        Instantiate(knifePrefab, spawnPoint3.position, spawnPoint3.rotation);
-
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            isBoosted = true;
-
-        }
-
-        if (isBoosted)
-        {
-            moveSpeed = boostedMoveSpeed;
-        }
-        else
-        {
-            moveSpeed = 5f;
-        }
-
-        Vector2 targetPosition = GetMouseWorldPosition();
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-
-        if (Input.GetMouseButtonUp(1))
-        {
-            isBoosted = false;
-        }
-       
-
-    }
-        private Vector2 GetMouseWorldPosition()
-        {
-            Vector3 mousePosition = Input.mousePosition;
-            mousePosition.z = -Camera.main.transform.position.z;
-            return Camera.main.ScreenToWorldPoint(mousePosition);
-        }
-  
 }
