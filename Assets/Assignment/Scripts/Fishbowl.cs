@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class Fishbowl : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Sprite fishbowl1Sprite; // Sprite for Fishbowl1
+    public Sprite fishbowl2Sprite; // Sprite for Fishbowl2
+
+    void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (other.CompareTag("Blackcat"))
+        {
+            ChangeSprite(fishbowl2Sprite); // Change to Fishbowl2 sprite when Blackcat is near
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void ChangeSprite(Sprite newSprite)
     {
-        
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = newSprite;
+        }
     }
 }

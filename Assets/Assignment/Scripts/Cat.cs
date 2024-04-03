@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 
-using UnityEngine;
-
-using UnityEngine;
 
 public class Cat : MonoBehaviour
 {
+    protected static int catCount = 0; // Static variable to keep track of the number of cats
+
     protected Rigidbody2D rb;
     protected SpriteRenderer spriteRenderer;
     protected bool isSelected;
@@ -19,6 +17,9 @@ public class Cat : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Increment the cat count when a new cat is created
+        catCount++;
     }
 
     void Update()
@@ -43,13 +44,20 @@ public class Cat : MonoBehaviour
         {
             if (!isSelected)
             {
-                Select(); // Select this cat if clicked on
+                StartCoroutine(SelectionDelay()); // Start the coroutine for selection delay
             }
         }
         else
         {
             Deselect(); // Deselect this cat if clicked outside
         }
+    }
+
+    IEnumerator SelectionDelay()
+    {
+        yield return new WaitForSeconds(0.5f); // Wait for half a second
+
+        Select(); // Select this cat after the delay
     }
 
     void HandleInput()
@@ -69,13 +77,14 @@ public class Cat : MonoBehaviour
     public virtual void Select()
     {
         isSelected = true;
-  
+     
     }
 
     public virtual void Deselect()
     {
         isSelected = false;
-        rb.velocity = Vector2.zero; 
+        rb.velocity = Vector2.zero; // Stop the cat's movement when deselected
+
     }
 
     public virtual void SwitchSprite(Sprite newSprite)
@@ -88,6 +97,7 @@ public class Cat : MonoBehaviour
         // Check if the cat collided with a Fishbowl
         if (other.CompareTag("Fishbowl"))
         {
+
             BlackcatScript blackcatScript = GetComponent<BlackcatScript>();
             if (blackcatScript != null)
             {
@@ -103,5 +113,11 @@ public class Cat : MonoBehaviour
                 SwitchSprite(ragdollScript.Ragdoll2);
             }
         }
+    }
+
+    // Static function to get the total number of cats
+    public static int GetCatCount()
+    {
+        return catCount;
     }
 }
