@@ -76,14 +76,14 @@ public class Cat : MonoBehaviour
     public virtual void Select()
     {
         isSelected = true;
-        // Highlight the cat or show selection effect
+
     }
 
     public virtual void Deselect()
     {
         isSelected = false;
         rb.velocity = Vector2.zero; // Stop the cat's movement when deselected
-        // Remove highlight or selection effect
+    
     }
 
     public virtual void SwitchSprite(Sprite newSprite)
