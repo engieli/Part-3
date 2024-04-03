@@ -87,35 +87,7 @@ public class Cat : MonoBehaviour
 
     }
 
-    public virtual void SwitchSprite(Sprite newSprite)
-    {
-        spriteRenderer.sprite = newSprite;
-    }
-
-    protected virtual void OnTriggerEnter2D(Collider2D other)
-    {
-        // Check if the cat collided with a Fishbowl
-        if (other.CompareTag("Fishbowl"))
-        {
-
-            BlackcatScript blackcatScript = GetComponent<BlackcatScript>();
-            if (blackcatScript != null)
-            {
-                SwitchSprite(blackcatScript.Blackcat2);
-            }
-        }
-        // Check if the cat collided with a Scratchpost
-        else if (other.CompareTag("Scratchpost"))
-        {
-            RagdollScript ragdollScript = GetComponent<RagdollScript>();
-            if (ragdollScript != null)
-            {
-                SwitchSprite(ragdollScript.Ragdoll2);
-            }
-        }
-    }
-
-    // Static function to get the total number of cats
+ 
     public static int GetCatCount()
     {
         return catCount;

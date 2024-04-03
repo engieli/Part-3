@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RagdollScript : Cat
-
 {
     public Sprite Ragdoll;
     public Sprite Ragdoll2;
@@ -21,7 +20,12 @@ public class RagdollScript : Cat
 
         if (newSprite == Ragdoll2 && ScratchpostTrigger)
         {
-            // Implementation specific to Ragdoll and ScratchpostTrigger
+            SwitchToRagdoll2Sprite();
         }
+    }
+
+    void SwitchToRagdoll2Sprite()
+    {
+        spriteRenderer.sprite = Ragdoll2;
     }
 }

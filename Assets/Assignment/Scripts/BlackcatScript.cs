@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BlackcatScript : Cat
 {
-
     public Sprite Blackcat;
     public Sprite Blackcat2;
     public bool FishbowlTrigger;
@@ -21,7 +20,12 @@ public class BlackcatScript : Cat
 
         if (newSprite == Blackcat2 && FishbowlTrigger)
         {
-
+            SwitchToBlackcat2Sprite();
         }
+    }
+
+    void SwitchToBlackcat2Sprite()
+    {
+        spriteRenderer.sprite = Blackcat2;
     }
 }
