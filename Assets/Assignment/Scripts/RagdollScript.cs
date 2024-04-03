@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class RagdollScript : Cat
 {
     public Sprite Ragdoll;
@@ -14,18 +15,29 @@ public class RagdollScript : Cat
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public override void SwitchSprite(Sprite newSprite)
+    protected override void OnTriggerEnter2D(Collider2D other)
     {
-        base.SwitchSprite(newSprite);
+        base.OnTriggerEnter2D(other);
 
-        if (newSprite == Ragdoll2 && ScratchpostTrigger)
+        if (other.CompareTag("Scratchpost"))
         {
-            SwitchToRagdoll2Sprite();
+            if (ScratchpostTrigger)
+            {
+                SwitchSprite(Ragdoll2);
+            }
         }
     }
 
-    void SwitchToRagdoll2Sprite()
+    protected override void OnTriggerExit2D(Collider2D other)
     {
-        spriteRenderer.sprite = Ragdoll2;
+        base.OnTriggerExit2D(other);
+
+        if (other.CompareTag("Scratchpost"))
+        {
+            SwitchSprite(Ragdoll);
+        }
     }
 }
+
+
+

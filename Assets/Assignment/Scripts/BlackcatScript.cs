@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BlackcatScript : Cat
 {
     public Sprite Blackcat;
@@ -14,18 +15,27 @@ public class BlackcatScript : Cat
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public override void SwitchSprite(Sprite newSprite)
+    protected override  void OnTriggerEnter2D(Collider2D other)
     {
-        base.SwitchSprite(newSprite);
+        base.OnTriggerEnter2D(other);
 
-        if (newSprite == Blackcat2 && FishbowlTrigger)
+        if (other.CompareTag("Fishbowl"))
         {
-            SwitchToBlackcat2Sprite();
+            if (FishbowlTrigger)
+            {
+                SwitchSprite(Blackcat2);
+            }
         }
     }
 
-    void SwitchToBlackcat2Sprite()
+    protected override void OnTriggerExit2D(Collider2D other)
     {
-        spriteRenderer.sprite = Blackcat2;
+        base.OnTriggerExit2D(other);
+
+        if (other.CompareTag("Fishbowl"))
+        {
+         
+        }
     }
 }
+

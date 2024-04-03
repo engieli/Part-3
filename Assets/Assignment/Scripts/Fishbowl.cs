@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Fishbowl : MonoBehaviour
 {
-    public Sprite fishbowl1Sprite; // Sprite for Fishbowl1
-    public Sprite fishbowl2Sprite; // Sprite for Fishbowl2
+    public Sprite fishbowl1Sprite; 
+    public Sprite fishbowl2Sprite; 
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Blackcat"))
         {
-            ChangeSprite(fishbowl2Sprite); // Change to Fishbowl2 sprite when Blackcat is near
+            ChangeSprite(fishbowl2Sprite); 
         }
     }
 
 
-    void ChangeSprite(Sprite newSprite)
+void ChangeSprite(Sprite newSprite)
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)

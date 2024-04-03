@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Cat : MonoBehaviour
 {
     protected static int catCount = 0; // Static variable to keep track of the number of cats
@@ -77,17 +76,66 @@ public class Cat : MonoBehaviour
     public virtual void Select()
     {
         isSelected = true;
-     
+        // Highlight the cat or show selection effect
     }
 
     public virtual void Deselect()
     {
         isSelected = false;
         rb.velocity = Vector2.zero; // Stop the cat's movement when deselected
-
+        // Remove highlight or selection effect
     }
 
- 
+    public virtual void SwitchSprite(Sprite newSprite)
+    {
+        spriteRenderer.sprite = newSprite;
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        // Check if the cat collided with a Fishbowl
+        if (other.CompareTag("Fishbowl"))
+        {
+            BlackcatScript blackcatScript = GetComponent<BlackcatScript>();
+            if (blackcatScript != null)
+            {
+                blackcatScript.FishbowlTrigger = true;
+            }
+        }
+        // Check if the cat collided with a Scratchpost
+        else if (other.CompareTag("Scratchpost"))
+        {
+            RagdollScript ragdollScript = GetComponent<RagdollScript>();
+            if (ragdollScript != null)
+            {
+                ragdollScript.ScratchpostTrigger = true;
+            }
+        }
+    }
+
+    protected virtual void OnTriggerExit2D(Collider2D other)
+    {
+        // Check if the cat exited the Fishbowl trigger
+        if (other.CompareTag("Fishbowl"))
+        {
+            BlackcatScript blackcatScript = GetComponent<BlackcatScript>();
+            if (blackcatScript != null)
+            {
+                blackcatScript.FishbowlTrigger = false;
+            }
+        }
+        // Check if the cat exited the Scratchpost trigger
+        else if (other.CompareTag("Scratchpost"))
+        {
+            RagdollScript ragdollScript = GetComponent<RagdollScript>();
+            if (ragdollScript != null)
+            {
+                ragdollScript.ScratchpostTrigger = false;
+            }
+        }
+    }
+
+    // Static function to get the total number of cats
     public static int GetCatCount()
     {
         return catCount;
